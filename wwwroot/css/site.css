@@ -1,0 +1,221 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+/* Audio */
+
+.container-Audio {
+    height: 100vh;
+    background-color: #def7ee;
+}
+
+.container-Audio .card {
+    border: none;
+    height: 400px;
+}
+
+.container-Audio .cant {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.container-Audio .music {
+    margin-bottom: 10px;
+}
+
+    .container-Audio .music:hover {
+        background-color: #f7f7f7;
+        border-radius: 3px;
+        cursor: pointer;
+ }
+
+ .container-Audio .color {
+     color: #ff7e3d;
+ }
+
+ .container-Audio .playlist {
+     height: 51px;
+ }
+
+ .container-Audio .btn-success {
+     color: #fff;
+     background-color: #ff7e3d;
+     border-color: #ff7e3d;
+ }
+
+ .container-Audio .btn-success:hover,
+ .container-Audio .btn-success:active {
+     color: #fff;
+     background-color: #ff7e3d;
+     border-color: #ff7e3d;
+ }
+
+ .container-Audio .btn-success:focus {
+     box-shadow: none
+ }
+/* Video */
+.videoplayer {
+    position: relative;
+    display: block;
+}
+
+    .videoplayer video {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .videoplayer .controls {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        width: 100%;
+        align-items: center;
+        bottom: 0;
+        background-color: #eee;
+    }
+
+        .videoplayer .controls .progress {
+            background-color: #333;
+        }
+
+            .videoplayer .controls .progress .progress-bar {
+                transition: none !important;
+                background-color: #666;
+            }
+
+        .videoplayer .controls.controls-light .bi {
+            color: #2b2b2b;
+        }
+
+        .videoplayer .controls.controls-dark {
+            background-color: #2b2b2b;
+        }
+
+            .videoplayer .controls.controls-dark .bi {
+                color: #eee;
+            }
+
+            .videoplayer .controls.controls-dark .progress {
+                background-color: #ccc;
+            }
+
+                .videoplayer .controls.controls-dark .progress .progress-bar {
+                    background-color: #999;
+                }
+
+        .videoplayer .controls.auto-hide {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            transition-delay: 0.5s;
+        }
+
+        .videoplayer .controls button > *,
+        .videoplayer .controls .btn > * {
+            pointer-events: none !important;
+        }
+
+    .videoplayer .overlay {
+        position: absolute;
+        z-index: 300;
+        top: 0;
+        left: 0;
+    }
+
+        .videoplayer .overlay .title {
+            font-size: inherit;
+            color: white;
+            padding: 0.5rem;
+            font-weight: bold;
+        }
+
+    .videoplayer .dropup-volume {
+        position: absolute !important;
+        bottom: calc(100% + 5px) !important;
+        padding: 0.75rem 1rem;
+        transform: none !important;
+        min-width: inherit;
+    }
+
+        .videoplayer .dropup-volume .form-range {
+            -webkit-appearance: slider-vertical;
+            width: 1rem !important;
+            height: 100% !important;
+        }
+
+    .videoplayer:hover .controls.auto-hide {
+        opacity: 1;
+    }
+
+.tooltip {
+    z-index: 1400;
+}
+    .footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}

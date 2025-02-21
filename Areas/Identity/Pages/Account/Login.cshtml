@@ -1,0 +1,129 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+ Layout = "~/Views/Shared/_Layout Admain.cshtml";
+
+}
+
+
+
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="~/css/style.css">
+
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <img src="~/images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+              <h3>Log In to <strong>Speaky</strong></h3>
+              <p class="mb-4">Learning Today,Leading Tomorrow.We will help you go further</p>
+            </div>
+            <form id="account" method="post">
+              <div asp-validation-summary="All" class="text-danger"></div>
+
+              <div class="form-group first">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+              </div>
+              <div class="form-group last mb-4">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                
+              </div>
+              
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption" asp-for="Input.RememberMe"></span>
+                  <input type="checkbox" checked="checked"/>
+                    <input asp-for="Input.RememberMe" />
+                  @Html.DisplayNameFor(m => m.Input.RememberMe)
+                  <div class="control__indicator"></div>
+                </label>
+              
+                
+           
+                <span class="ml-auto"><a asp-page="./ForgotPassword" class="forgot-pass" id="forgot-password" >Forgot Password</a></span> 
+              </div>
+
+              <input type="submit" value="Log In" class="btn text-white btn-block btn-success">
+           
+              <button asp-page="./Register" class="btn text-light btn-block btn-dark" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</button>
+              <button id="resend-confirmation" class="btn text-light btn-block btn-dark" asp-page="./ResendEmailConfirmation">Resend email</button>
+
+              <span class="d-block text-left my-4 text-muted"> or log in with</span>
+              
+              <div class="social-login">
+                 @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-warning" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+              </div>
+            </form>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

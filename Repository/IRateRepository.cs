@@ -1,0 +1,18 @@
+﻿using EnglishLearning.Models;
+using System;
+using System.Collections.Generic;
+
+namespace EnglishLearning.Repository
+{
+    public interface IRateRepository
+    {
+        Guid id { get; set; }
+        int delete(int id);
+        List<Rate> GetAll();
+        List<Rate> GetByCourseId(int id);
+        Rate GetById(int id);
+        Rate GetByIdCourse(int courseID);
+        int Insert(Rate rate);
+        int update(int id, Rate rate);
+    }
+}

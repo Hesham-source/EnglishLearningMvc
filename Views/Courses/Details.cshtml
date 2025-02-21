@@ -1,0 +1,174 @@
+﻿@model EnglishLearning.Models.ViewModel.dataTab_detVM
+
+@{
+    Layout="_LayoutCourseDetails";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 ">
+            <div class="p-4 rounded border box-shadow ">
+                <form asp-action="" method="post">
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                               <label>Level Course</label>
+                        </div> 
+                        <div class="col-md-8">
+                            <input readonly class="form-control" value="@Model.courses.Level.Name" />
+                        </div>
+                    </div>
+                     <div class="row mt-3">
+                        <div class="col-md-4">
+                               <label>
+                                   @Html.DisplayNameFor(model => model.courses.Name)
+                               </label>
+                        </div> 
+                        <div class="col-md-8">
+                            <input readonly class="form-control" value="@Model.courses.Name" />
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                               <label>
+                                   @Html.DisplayNameFor(model => model.courses.Date)
+                               </label>
+                        </div> 
+                        <div class="col-md-8">
+                            <input readonly class="form-control" value="@Model.courses.Date" />
+                        </div>
+                    </div>
+                     <div class="row mt-3">
+                        <div class="col-md-4">
+                               <label>
+                                   @Html.DisplayNameFor(model => model.courses.User_Id)
+                               </label>
+                        </div> 
+                        <div class="col-md-8">
+                            <input readonly class="form-control" value="@Model.courses.User_Id" />
+                        </div>
+                    </div>
+                </form>
+                <div>
+                         <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+                       
+                      <div class="container mt-4 text-right">
+                        <button type="button" onclick="SendMessage()" id="btn_Like" class="btn btn-primary">
+                         Like <i class="fa fa-thumbs-up"></i> <span id="spanLike" class="badge badge-light text-primary">@ViewBag.dataa.Stars</span>
+                        </button>
+                        <button type="button"  onclick="dislike()" id="btn_Dis_Like" class="btn btn-danger">
+                        Love  <i class="fa fa-heart"></i> <span id="spanDisLike" class="badge badge-light text-primary">@ViewBag.dataa.dislike</span>
+                        </button>
+                        <button type="button"  onclick="Addfav()" id="btn_Dis_Like" class="btn btn-success">
+                          Add favourite <span id="spanDisLike" class="badge badge-light text-primary"><i class="fa fa-star"></i></span>
+                        </button>
+           <a asp-controller="Enrollment" asp-action ="Create" asp-route-courseId="@Model.courses.Id" asp-route-userId="@(User.Identity.Name)">Subscribe</a>
+
+                      </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-4">
+             <div class="alert alert-primary">
+                 Some Courses
+             </div>
+             @foreach (var item in Model.coursesLi.Take(10))
+            {
+                <img src="@item.Image" />
+                <h2 class="bg-primary text-light p-1 rounded box-shadow text-center"><a asp-action="Details" class="btn text-light " asp-route-Id="@item.Id">@item.Name</a></h2>
+            }
+        </div>
+    </div>
+</div>
+<ul>
+  @*<h2>AllComments</h2>*@
+
+@foreach(Comment item in ViewBag.comments)
+{
+<li> @item.Id : @item.Text </li>
+}
+</ul>
+<div> </div>
+@*    comments part
+*@  
+<ul id="newComment">
+    hhhhhhhh
+</ul>
+Comment:<input type="text" name="comment" id="comment" class="form-control" />
+<br/>
+
+<input type="button" onclick = "SendComment()" value="Add" class="btn btn-success" />
+<br/>
+<script>
+    // add Comment 
+        var CommentHubConnection = new signalR.HubConnectionBuilder().withUrl("/CommentHub").build();
+       // var  CommentText = document.getElementById("comment").value;
+        CommentHubConnection.on("NewComment",function (UserName,  CommentText, CourseId )
+        {
+
+            if(@Model.courses.Id == CourseId)
+            {
+                document.getElementById("newComment").innerHTML+=
+                "<li>"+UserName +":" +CommentText+"</li>";
+            }
+        });
+
+        CommentHubConnection.start().then(function(){
+        console.log("Connect Success");
+            });
+
+          var SendComment=  function ()
+            {
+
+            var text = document.getElementById("comment").value;
+
+            CommentHubConnection.invoke("WriteComment","@(User.Identity.Name)",text,"@(Model.courses.Id)");
+
+            };
+        
+</Script>
+<script>
+    //Hub 
+    var hubConnection=
+           new signalR.HubConnectionBuilder().withUrl("/Chat").build();
+            //handle request come from server
+   hubConnection.on("Display",function(idCourse,data,type){
+       if(@Model.courses.Id == idCourse)
+       {
+           if(type=="1")
+           {
+                 document.getElementById("spanLike").innerHTML=data;
+
+           }else{
+                document.getElementById("spanDisLike").innerHTML=data;
+           }
+       }
+   });
+
+   //add favourit
+         hubConnection.on("Display_data",function(userr,data){
+             let user="@(User.Identity.Name)";
+
+       if(user === userr)
+       {
+           alert(data);
+             
+       }
+   });
+     //Start
+    hubConnection.start().then(function(){
+        console.log("Connect Success");
+    });
+    //send data to hub server
+    function SendMessage(){
+         hubConnection.invoke("SendMEssageFromClient","1","@(User.Identity.Name)","@(Model.courses.Id)");
+    }
+    function dislike()
+    {
+         hubConnection.invoke("SendMEssageFromClient","0","@(User.Identity.Name)","@(Model.courses.Id)");
+    }
+    function Addfav()
+    {
+         hubConnection.invoke("SendMEssageAddFav","@(User.Identity.Name)","@(Model.courses.Id)");
+    }
+</script>
+
